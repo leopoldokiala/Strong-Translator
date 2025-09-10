@@ -3,9 +3,11 @@ import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:provider/provider.dart';
 import 'package:strong_translate/models/page_manager.dart';
 import 'package:strong_translate/helpers/languages_helper.dart';
+import 'package:strong_translate/models/translation.dart';
 import 'package:strong_translate/screens/traduction/my_button.dart';
 import 'package:strong_translate/services/i_services.dart';
 import 'package:strong_translate/services/offline_translator_service.dart';
+import 'package:strong_translate/services/translation_data_base_service.dart';
 
 class TraductionScreen extends StatelessWidget {
   const TraductionScreen({super.key});
@@ -141,6 +143,18 @@ class TraductionScreen extends StatelessWidget {
                         await translatorService.translate(
                           pageManager.controller.text,
                         );
+                        //Salvar a tradução no histórico
+                        if (translatorService.translatedText.isNotEmpty) {
+                          final translation = Translation(
+                            sourceText: pageManager.controller.text,
+                            translatedText: translatorService.translatedText,
+                            sourceLang: translatorService.sourceLang.bcpCode,
+                            targetLang: translatorService.targetLang.bcpCode,
+                          );
+                          await context
+                              .read<TranslationDataBase>()
+                              .saveTranslation(translation);
+                        }
                       },
                       Icons.send_rounded,
                     ),
@@ -166,7 +180,7 @@ class TraductionScreen extends StatelessWidget {
                             child: Text(entry.key),
                           );
                         }).toList(),
-                    onChanged: (value) {
+                    onChanged: (value) async {
                       if (value != null) {
                         translatorService.setTargetLang(value);
                       }

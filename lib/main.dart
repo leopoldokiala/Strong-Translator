@@ -41,13 +41,12 @@ class MyApp extends StatelessWidget {
               },
             );
           default:
-            MaterialPageRoute(
+            return MaterialPageRoute(
               builder: (context) {
                 return BaseScreen();
               },
             );
         }
-        return null;
       },
     );
   }

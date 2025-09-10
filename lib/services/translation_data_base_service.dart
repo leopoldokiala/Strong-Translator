@@ -24,30 +24,35 @@ class TranslationDataBase extends ChangeNotifier {
   Future<Database> initDb() async {
     final databasesPath = await getDatabasesPath();
     final path = p.join(databasesPath, 'translation.db');
-    notifyListeners();
+
     return await openDatabase(
       path,
       version: 1,
       onCreate: (Database db, int newVersion) async {
         await db.execute(
-          'CREATE TABLE $translationTable($idColumn INTEGER PRIMARY KEY, $sourceTextColumn TEXT, $translatedTextColumn TEXT,$sourceLangColumn TEXT, $targetLangColumn TEXT)',
+          'CREATE TABLE $translationTable('
+          '$idColumn INTEGER PRIMARY KEY, '
+          '$sourceTextColumn TEXT, '
+          '$translatedTextColumn TEXT, '
+          '$sourceLangColumn TEXT, '
+          '$targetLangColumn TEXT)',
         );
       },
     );
   }
 
-  //Salvar as traduções
+  // Salvar tradução
   Future<Translation> saveTranslation(Translation translation) async {
     final dbTranslation = await db;
     final insertedId = await dbTranslation?.insert(
       translationTable,
       translation.toMap(),
     );
-    notifyListeners();
+    notifyListeners(); // <- aqui sim faz sentido
     return translation.copyWith(id: insertedId);
   }
 
-  //Obter os dados de uma tradução
+  // Obter tradução por ID
   Future<Translation?> getTranslation(int id) async {
     final dbTranslation = await db;
     final maps = await dbTranslation?.query(
@@ -62,7 +67,6 @@ class TranslationDataBase extends ChangeNotifier {
       where: '$idColumn = ?',
       whereArgs: [id],
     );
-    notifyListeners();
     if (maps?.isNotEmpty ?? false) {
       return Translation.fromMap(maps!.first);
     } else {
@@ -70,62 +74,63 @@ class TranslationDataBase extends ChangeNotifier {
     }
   }
 
-  //Deletar tradução
+  // Deletar tradução
   Future<int> deleteTranslation(int id) async {
     final dbTranslation = await db;
     if (dbTranslation == null) {
       throw Exception('Base de Dados não inicializada');
     }
-    notifyListeners();
-    return await dbTranslation.delete(
+    final deleted = await dbTranslation.delete(
       translationTable,
       where: '$idColumn = ?',
       whereArgs: [id],
     );
+    notifyListeners();
+    return deleted;
   }
 
-  //Atualizar Tradução
+  // Atualizar tradução
   Future<int> updateTranslation(Translation translation) async {
     final dbTranslation = await db;
-    notifyListeners();
     if (dbTranslation == null) {
       throw Exception('Base de dados não inicializada');
     }
     if (translation.id == null) {
       throw ArgumentError(
-        'Id da tradução não pode ser nula para ser atualizada',
+        'Id da tradução não pode ser nulo para ser atualizado',
       );
     }
 
-    return await dbTranslation.update(
+    final updated = await dbTranslation.update(
       translationTable,
       translation.toMap(),
       where: '$idColumn = ?',
       whereArgs: [translation.id],
     );
+    notifyListeners();
+    return updated;
   }
 
-  //Obter todas as traduções
+  // Obter todas traduções
   Future<List<Translation>> getAllTranslations() async {
     final dbTranslation = await db;
     if (dbTranslation == null) {
       throw Exception('Base de dados não inicializada');
     }
 
-    List<Map<String, dynamic>> listMap = await dbTranslation.rawQuery(
+    final listMap = await dbTranslation.rawQuery(
       'SELECT * FROM $translationTable',
     );
-    List<Translation> listTranslation = [];
-    for (Map<String, dynamic> m in listMap) {
-      listTranslation.add(Translation.fromMap(m));
-    }
-    notifyListeners();
-    return listTranslation;
+
+    return listMap.map((m) => Translation.fromMap(m)).toList();
   }
 
+  // Fechar conexão
   Future<void> close() async {
     final dbTranslation = await db;
-    if (dbTranslation != null) await dbTranslation.close();
-    notifyListeners();
+    if (dbTranslation != null) {
+      await dbTranslation.close();
+      _db = null;
+    }
   }
 }

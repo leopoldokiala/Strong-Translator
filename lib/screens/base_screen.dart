@@ -31,9 +31,9 @@ class BaseScreen extends StatelessWidget {
           create: (context) => LanguagesHelper(),
         ),
         ChangeNotifierProvider(lazy: false, create: (context) => IServices()),
-        Provider<TranslationDataBase>(
+        ChangeNotifierProvider<TranslationDataBase>(
           create: (_) => TranslationDataBase(),
-          lazy: false, // abrir DB imediatamente se quiser
+          lazy: true,
         ),
       ],
       child: Consumer3<PageManager, OfflineTranslatorService, LanguagesHelper>(
