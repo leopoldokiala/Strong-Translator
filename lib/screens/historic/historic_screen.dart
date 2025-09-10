@@ -27,11 +27,8 @@ class HistoricScreen extends StatelessWidget {
               return Center(child: Text('Sem traduções no histórico'));
             }
 
-            final translations = snapshot.data;
             return ListView.builder(
-              itemCount: translations?.length,
               itemBuilder: (context, index) {
-                final translation = translations?[index];
                 return ListTile(
                   title: Text(
                     pageManager.controller.text,

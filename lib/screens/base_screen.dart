@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:strong_translate/helpers/languages_helper.dart';
 import 'package:strong_translate/models/page_manager.dart';
