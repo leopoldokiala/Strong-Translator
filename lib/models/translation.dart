@@ -1,4 +1,6 @@
 // Constantes de nomes de colunas
+
+String translationTable = 'translationTable';
 String idColumn = 'idColumn';
 String sourceTextColumn = 'sourceTextColumn';
 String translatedTextColumn = 'translatedTextColumn';
@@ -6,7 +8,7 @@ String sourceLangColumn = 'sourceLangColumn';
 String targetLangColumn = 'targetLangColumn';
 
 class Translation {
-  final int? id;
+  int? id;
   final String sourceText;
   final String translatedText;
   final String sourceLang;

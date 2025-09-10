@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:provider/provider.dart';
-import 'package:strong_translate/helpers/clipboard_helper.dart';
 import 'package:strong_translate/models/page_manager.dart';
 import 'package:strong_translate/helpers/languages_helper.dart';
 import 'package:strong_translate/screens/traduction/my_button.dart';
+import 'package:strong_translate/services/i_services.dart';
 import 'package:strong_translate/services/offline_translator_service.dart';
 
 class TraductionScreen extends StatelessWidget {
@@ -103,7 +103,7 @@ class TraductionScreen extends StatelessWidget {
                           myButton(
                             Icons.copy_rounded,
                             onTap: () {
-                              context.read<ClipboardHelper>().copy(
+                              context.read<IServices>().copy(
                                 pageManager.controller.text,
                               );
                               ScaffoldMessenger.of(context).showSnackBar(

@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 import 'package:strong_translate/models/translation.dart';
 
-class TranslationDataBase {
+class TranslationDataBase extends ChangeNotifier {
   TranslationDataBase.internal();
 
   static final TranslationDataBase _instance = TranslationDataBase.internal();
@@ -23,7 +24,7 @@ class TranslationDataBase {
   Future<Database> initDb() async {
     final databasesPath = await getDatabasesPath();
     final path = p.join(databasesPath, 'translation.db');
-
+    notifyListeners();
     return await openDatabase(
       path,
       version: 1,
@@ -42,6 +43,7 @@ class TranslationDataBase {
       translationTable,
       translation.toMap(),
     );
+    notifyListeners();
     return translation.copyWith(id: insertedId);
   }
 
@@ -60,6 +62,7 @@ class TranslationDataBase {
       where: '$idColumn = ?',
       whereArgs: [id],
     );
+    notifyListeners();
     if (maps?.isNotEmpty ?? false) {
       return Translation.fromMap(maps!.first);
     } else {
@@ -70,8 +73,10 @@ class TranslationDataBase {
   //Deletar tradução
   Future<int> deleteTranslation(int id) async {
     final dbTranslation = await db;
-    if (dbTranslation == null) throw Exception('Database not initialized');
-
+    if (dbTranslation == null) {
+      throw Exception('Base de Dados não inicializada');
+    }
+    notifyListeners();
     return await dbTranslation.delete(
       translationTable,
       where: '$idColumn = ?',
@@ -82,6 +87,7 @@ class TranslationDataBase {
   //Atualizar Tradução
   Future<int> updateTranslation(Translation translation) async {
     final dbTranslation = await db;
+    notifyListeners();
     if (dbTranslation == null) {
       throw Exception('Base de dados não inicializada');
     }
@@ -113,11 +119,13 @@ class TranslationDataBase {
     for (Map<String, dynamic> m in listMap) {
       listTranslation.add(Translation.fromMap(m));
     }
+    notifyListeners();
     return listTranslation;
   }
 
   Future<void> close() async {
     final dbTranslation = await db;
     if (dbTranslation != null) await dbTranslation.close();
+    notifyListeners();
   }
 }

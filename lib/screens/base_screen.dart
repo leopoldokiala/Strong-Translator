@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:strong_translate/helpers/clipboard_helper.dart';
-import 'package:strong_translate/models/page_manager.dart';
 import 'package:strong_translate/helpers/languages_helper.dart';
+import 'package:strong_translate/models/page_manager.dart';
 import 'package:strong_translate/screens/historic/historic_screen.dart';
 import 'package:strong_translate/screens/traduction/traduction_screen.dart';
+import 'package:strong_translate/services/i_services.dart';
 import 'package:strong_translate/services/offline_translator_service.dart';
+import 'package:strong_translate/services/translation_data_base_service.dart';
 
 class BaseScreen extends StatelessWidget {
   BaseScreen({super.key});
@@ -28,9 +29,10 @@ class BaseScreen extends StatelessWidget {
           lazy: false,
           create: (context) => LanguagesHelper(),
         ),
-        ChangeNotifierProvider(
-          lazy: false,
-          create: (context) => ClipboardHelper(),
+        ChangeNotifierProvider(lazy: false, create: (context) => IServices()),
+        Provider<TranslationDataBase>(
+          create: (_) => TranslationDataBase(),
+          lazy: false, // abrir DB imediatamente se quiser
         ),
       ],
       child: Consumer3<PageManager, OfflineTranslatorService, LanguagesHelper>(
