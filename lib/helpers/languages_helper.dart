@@ -12,4 +12,10 @@ class LanguagesHelper extends ChangeNotifier {
     "Chinesa": TranslateLanguage.chinese,
     "Japonesa": TranslateLanguage.japanese,
   };
+
+  // Mapa inverso: código -> nome
+  late final Map<String, String> codeToName = {
+    for (var entry in supportedLanguages.entries)
+      entry.value.bcpCode: entry.key,
+  };
 }

@@ -56,6 +56,7 @@ class BaseScreen extends StatelessWidget {
             ),
             body: PageView(
               controller: _pageController,
+              physics: NeverScrollableScrollPhysics(),
               onPageChanged: (value) {
                 context.read<PageManager>().setPage(value);
               },

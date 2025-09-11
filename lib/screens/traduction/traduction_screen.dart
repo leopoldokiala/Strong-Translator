@@ -24,14 +24,12 @@ class TraductionScreen extends StatelessWidget {
       ) {
         return Column(
           children: [
-            // Dropdown da língua de origem
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   DropdownButton<TranslateLanguage>(
                     elevation: 0,
-
                     dropdownColor: Theme.of(context).primaryColor,
                     alignment: Alignment.topLeft,
                     value: translatorService.sourceLang,
@@ -67,7 +65,7 @@ class TraductionScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 150.0,
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(16.0)),
                     ),
                     padding: const EdgeInsets.fromLTRB(16.0, 16.0, 62.0, 16.0),
@@ -195,7 +193,7 @@ class TraductionScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(16.0)),
                   ),
                   padding: const EdgeInsets.all(16.0),
