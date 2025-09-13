@@ -18,4 +18,16 @@ class LanguagesHelper extends ChangeNotifier {
     for (var entry in supportedLanguages.entries)
       entry.value.bcpCode: entry.key,
   };
+
+  // Mapa para o TextToSpeech
+  final Map<String, String> ttsLanguageCodes = {
+    "Português": "pt-PT", // ou "pt-BR" se preferir sotaque brasileiro
+    "Inglês": "en-US",
+    "Francês": "fr-FR",
+    "Espanhol": "es-ES",
+    "Alemão": "de-DE",
+    "Italiano": "it-IT",
+    "Chinesa": "zh-CN",
+    "Japonesa": "ja-JP",
+  };
 }

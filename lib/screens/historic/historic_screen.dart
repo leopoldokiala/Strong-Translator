@@ -56,7 +56,9 @@ class HistoricScreen extends StatelessWidget {
                             ),
                             title: Text(
                               translation.sourceText,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 color: Theme.of(context).unselectedWidgetColor,
                               ),
                             ),

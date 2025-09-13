@@ -48,7 +48,7 @@ class TranslationDataBase extends ChangeNotifier {
       translationTable,
       translation.toMap(),
     );
-    notifyListeners(); // <- aqui sim faz sentido
+    notifyListeners();
     return translation.copyWith(id: insertedId);
   }
 

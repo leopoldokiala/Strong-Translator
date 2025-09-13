@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:strong_translate/helpers/languages_helper.dart';
 import 'package:strong_translate/models/page_manager.dart';
@@ -8,6 +7,7 @@ import 'package:strong_translate/screens/traduction/traduction_screen.dart';
 import 'package:strong_translate/services/i_services.dart';
 import 'package:strong_translate/services/offline_translator_service.dart';
 import 'package:strong_translate/services/translation_data_base_service.dart';
+import 'package:strong_translate/widgets/my_app_bar.dart';
 
 class BaseScreen extends StatelessWidget {
   BaseScreen({super.key});
@@ -36,23 +36,14 @@ class BaseScreen extends StatelessWidget {
           lazy: true,
         ),
       ],
-      child: Consumer3<PageManager, OfflineTranslatorService, LanguagesHelper>(
-        builder: (
-          context,
-          pageManager,
-          translatorService,
-          supportedLanguages,
-          child,
-        ) {
+      child: Consumer<PageManager>(
+        builder: (context, pageManager, child) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Color(0xff2F4F4F),
-            appBar: AppBar(
-              backgroundColor: Color(0xff008B8B),
-              title: Text(
-                'Strong Translator',
-                style: TextStyle(color: Colors.white),
-              ),
-              centerTitle: true,
+            appBar: myAppBar(
+              title: 'Strong Translator',
+              color: Color(0xff008B8B),
             ),
             body: PageView(
               controller: _pageController,
@@ -92,10 +83,6 @@ class BaseScreen extends StatelessWidget {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.history_rounded),
                   label: 'Histórico',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: 'Definição',
                 ),
               ],
             ),

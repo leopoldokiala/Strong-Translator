@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:strong_translate/models/page_manager.dart';
 import 'package:strong_translate/helpers/languages_helper.dart';
 import 'package:strong_translate/models/translation.dart';
-import 'package:strong_translate/screens/traduction/my_button.dart';
+import 'package:strong_translate/widgets/my_button.dart';
 import 'package:strong_translate/services/i_services.dart';
 import 'package:strong_translate/services/offline_translator_service.dart';
 import 'package:strong_translate/services/translation_data_base_service.dart';
@@ -118,9 +118,30 @@ class TraductionScreen extends StatelessWidget {
                             },
                           ),
                           SizedBox(height: 6.0),
-                          myButton(Icons.mic_none_rounded, onTap: () {}),
+
                           SizedBox(height: 6.0),
-                          myButton(Icons.volume_up_rounded, onTap: () {}),
+                          myButton(
+                            Icons.volume_up_rounded,
+                            onTap: () {
+                              final text = pageManager.controller.text;
+                              final langName =
+                                  supportedLanguages
+                                      .codeToName[translatorService
+                                      .sourceLang
+                                      .bcpCode] ??
+                                  'Português';
+                              final langCode =
+                                  supportedLanguages
+                                      .ttsLanguageCodes[langName] ??
+                                  'Português';
+                              if (text.isNotEmpty) {
+                                context.read<IServices>().speakText(
+                                  languageCode: langCode,
+                                  text: text,
+                                );
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -197,22 +218,47 @@ class TraductionScreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(16.0)),
                   ),
                   padding: const EdgeInsets.all(16.0),
-                  child:
-                      translatorService.isTranslating
-                          ? Center(
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          )
-                          : Text(
-                            translatorService.translatedText.isEmpty
-                                ? 'Tradução'
-                                : translatorService.translatedText,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                            ),
-                          ),
+                  child: Stack(
+                    children: [
+                      // Texto / loading
+                      Padding(
+                        padding: const EdgeInsets.only(right: 80.0),
+                        child:
+                            translatorService.isTranslating
+                                ? Center(
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                )
+                                : SingleChildScrollView(
+                                  child: Text(
+                                    translatorService.translatedText.isEmpty
+                                        ? 'Tradução'
+                                        : translatorService.translatedText,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                ),
+                      ),
+
+                      // Botões fixos à direita
+                      Positioned(
+                        right: 0,
+                        top: 16,
+                        bottom: 16,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            myButton(Icons.copy_rounded, onTap: () {}),
+                            const SizedBox(height: 8.0),
+                            myButton(Icons.volume_up_rounded, onTap: () {}),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
