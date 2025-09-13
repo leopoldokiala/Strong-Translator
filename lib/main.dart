@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:strong_translate/screens/base_screen.dart';
-import 'package:strong_translate/screens/historic/historic_screen.dart';
-import 'package:strong_translate/screens/traduction/traduction_screen.dart';
+import 'package:strong_translator/screens/base_screen.dart';
+import 'package:strong_translator/screens/historic/historic_screen.dart';
+import 'package:strong_translator/screens/traduction/traduction_screen.dart';
 
 void main() {
   runApp(const MyApp());

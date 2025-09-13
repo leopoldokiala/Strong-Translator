@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
-import 'package:strong_translate/models/translation.dart';
+import 'package:strong_translator/models/translation.dart';
 
 class TranslationDataBase extends ChangeNotifier {
   TranslationDataBase.internal();

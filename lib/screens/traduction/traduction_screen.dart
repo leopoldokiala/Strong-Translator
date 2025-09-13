@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:provider/provider.dart';
-import 'package:strong_translate/models/page_manager.dart';
-import 'package:strong_translate/helpers/languages_helper.dart';
-import 'package:strong_translate/models/translation.dart';
-import 'package:strong_translate/widgets/my_button.dart';
-import 'package:strong_translate/services/i_services.dart';
-import 'package:strong_translate/services/offline_translator_service.dart';
-import 'package:strong_translate/services/translation_data_base_service.dart';
+import 'package:strong_translator/models/page_manager.dart';
+import 'package:strong_translator/helpers/languages_helper.dart';
+import 'package:strong_translator/models/translation.dart';
+import 'package:strong_translator/widgets/my_button.dart';
+import 'package:strong_translator/services/i_services.dart';
+import 'package:strong_translator/services/offline_translator_service.dart';
+import 'package:strong_translator/services/translation_data_base_service.dart';
 
 class TraductionScreen extends StatelessWidget {
   const TraductionScreen({super.key});
@@ -94,14 +94,14 @@ class TraductionScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           myButton(
-                            Icons.clear,
+                            icon: Icons.clear,
                             onTap: () {
                               pageManager.controller.clear();
                             },
                           ),
-                          SizedBox(height: 6.0),
+                          SizedBox(height: 8.0),
                           myButton(
-                            Icons.copy_rounded,
+                            icon: Icons.copy_rounded,
                             onTap: () {
                               context.read<IServices>().copy(
                                 pageManager.controller.text,
@@ -117,11 +117,9 @@ class TraductionScreen extends StatelessWidget {
                               );
                             },
                           ),
-                          SizedBox(height: 6.0),
-
-                          SizedBox(height: 6.0),
+                          SizedBox(height: 8.0),
                           myButton(
-                            Icons.volume_up_rounded,
+                            icon: Icons.volume_up_rounded,
                             onTap: () {
                               final text = pageManager.controller.text;
                               final langName =
@@ -133,7 +131,7 @@ class TraductionScreen extends StatelessWidget {
                               final langCode =
                                   supportedLanguages
                                       .ttsLanguageCodes[langName] ??
-                                  'Português';
+                                  'Inglês';
                               if (text.isNotEmpty) {
                                 context.read<IServices>().speakText(
                                   languageCode: langCode,
@@ -175,7 +173,7 @@ class TraductionScreen extends StatelessWidget {
                               .saveTranslation(translation);
                         }
                       },
-                      Icons.send_rounded,
+                      icon: Icons.send_rounded,
                     ),
                 ],
               ),
@@ -251,9 +249,37 @@ class TraductionScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            myButton(Icons.copy_rounded, onTap: () {}),
+                            myButton(
+                              icon: Icons.copy_rounded,
+                              onTap: () {
+                                context.read<IServices>().copy(
+                                  translatorService.translatedText,
+                                );
+                              },
+                            ),
                             const SizedBox(height: 8.0),
-                            myButton(Icons.volume_up_rounded, onTap: () {}),
+                            myButton(
+                              icon: Icons.volume_up_rounded,
+                              onTap: () {
+                                final text = translatorService.translatedText;
+                                final langName =
+                                    supportedLanguages
+                                        .codeToName[translatorService
+                                        .targetLang
+                                        .bcpCode] ??
+                                    'Português';
+                                final langCode =
+                                    supportedLanguages
+                                        .ttsLanguageCodes[langName] ??
+                                    'Inglês';
+                                if (text.isNotEmpty) {
+                                  context.read<IServices>().speakText(
+                                    languageCode: langCode,
+                                    text: text,
+                                  );
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),

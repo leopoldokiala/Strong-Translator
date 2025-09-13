@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget myButton(IconData icon, {required Function() onTap}) {
-  return GestureDetector(
+Widget myButton({IconData? icon, required Function() onTap}) {
+  return InkWell(
     onTap: onTap,
     child: Container(
       height: 40,

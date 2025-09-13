@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:strong_translate/helpers/languages_helper.dart';
-import 'package:strong_translate/models/page_manager.dart';
-import 'package:strong_translate/screens/historic/historic_screen.dart';
-import 'package:strong_translate/screens/traduction/traduction_screen.dart';
-import 'package:strong_translate/services/i_services.dart';
-import 'package:strong_translate/services/offline_translator_service.dart';
-import 'package:strong_translate/services/translation_data_base_service.dart';
-import 'package:strong_translate/widgets/my_app_bar.dart';
+import 'package:strong_translator/helpers/languages_helper.dart';
+import 'package:strong_translator/models/page_manager.dart';
+import 'package:strong_translator/screens/historic/historic_screen.dart';
+import 'package:strong_translator/screens/traduction/traduction_screen.dart';
+import 'package:strong_translator/services/i_services.dart';
+import 'package:strong_translator/services/offline_translator_service.dart';
+import 'package:strong_translator/services/translation_data_base_service.dart';
+import 'package:strong_translator/widgets/my_app_bar.dart';
 
 class BaseScreen extends StatelessWidget {
   BaseScreen({super.key});

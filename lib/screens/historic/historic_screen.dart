@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:strong_translate/helpers/languages_helper.dart';
+import 'package:strong_translator/helpers/languages_helper.dart';
 
-import 'package:strong_translate/services/translation_data_base_service.dart';
+import 'package:strong_translator/services/translation_data_base_service.dart';
 import '../../models/translation.dart';
 
 class HistoricScreen extends StatelessWidget {
