@@ -55,6 +55,7 @@ class HistoricScreen extends StatelessWidget {
                               left: 5.0,
                             ),
                             title: Text(
+                              maxLines: 1,
                               translation.sourceText,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -69,16 +70,18 @@ class HistoricScreen extends StatelessWidget {
                                 color: Theme.of(context).unselectedWidgetColor,
                               ),
                             ),
-                            trailing: IconButton(
-                              onPressed: () async {
-                                await dataBase.deleteTranslation(
-                                  translation.id!,
-                                );
-                              },
-                              icon: Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                                size: 28.0,
+                            trailing: InkWell(
+                              child: IconButton(
+                                onPressed: () async {
+                                  await dataBase.deleteTranslation(
+                                    translation.id!,
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                  size: 28.0,
+                                ),
                               ),
                             ),
                           ),
@@ -97,7 +100,6 @@ class HistoricScreen extends StatelessWidget {
                               topLeft: Radius.circular(8.0),
                             ),
                           ),
-
                           child: Container(
                             margin: EdgeInsets.only(left: 4.0, top: 2.0),
                             child: Text(

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:strong_translator/models/page_manager.dart';
 import 'package:strong_translator/helpers/languages_helper.dart';
 import 'package:strong_translator/models/translation.dart';
+import 'package:strong_translator/widgets/my_dropdown_button.dart';
 import 'package:strong_translator/widgets/my_button.dart';
 import 'package:strong_translator/services/i_services.dart';
 import 'package:strong_translator/services/offline_translator_service.dart';
@@ -28,10 +29,8 @@ class TraductionScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  DropdownButton<TranslateLanguage>(
-                    elevation: 0,
+                  myDropdownButton(
                     dropdownColor: Theme.of(context).primaryColor,
-                    alignment: Alignment.topLeft,
                     value: translatorService.sourceLang,
                     items:
                         supportedLanguages.supportedLanguages.entries.map((
@@ -54,8 +53,6 @@ class TraductionScreen extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Campo de texto (ocupa metade do espaço)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Stack(
@@ -71,6 +68,7 @@ class TraductionScreen extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(16.0, 16.0, 62.0, 16.0),
                     child: TextField(
                       controller: pageManager.controller,
+                      cursorColor: Colors.white,
                       style: TextStyle(
                         color: Theme.of(context).unselectedWidgetColor,
                       ),
@@ -160,7 +158,6 @@ class TraductionScreen extends StatelessWidget {
                         await translatorService.translate(
                           pageManager.controller.text,
                         );
-                        //Salvar a tradução no histórico
                         if (translatorService.translatedText.isNotEmpty) {
                           final translation = Translation(
                             sourceText: pageManager.controller.text,
@@ -182,11 +179,9 @@ class TraductionScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  DropdownButton<TranslateLanguage>(
-                    elevation: 0,
+                  myDropdownButton(
                     dropdownColor: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(16.0),
-                    style: TextStyle(color: Colors.white),
                     value: translatorService.targetLang,
                     items:
                         supportedLanguages.supportedLanguages.entries.map((
@@ -218,7 +213,6 @@ class TraductionScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Stack(
                     children: [
-                      // Texto / loading
                       Padding(
                         padding: const EdgeInsets.only(right: 80.0),
                         child:
@@ -240,8 +234,6 @@ class TraductionScreen extends StatelessWidget {
                                   ),
                                 ),
                       ),
-
-                      // Botões fixos à direita
                       Positioned(
                         right: 0,
                         top: 16,
