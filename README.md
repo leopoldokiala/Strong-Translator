@@ -29,30 +29,6 @@ O app utiliza o Google ML Kit Translation para traduções offline e armazena o 
 ##### Plataformas Suportadas
 - Android
 
-#####
-lib/
-├── helpers/
-│   └── languages_helper.dart   # Suporte a idiomas e mapeamento TTS
-├── models/
-│   ├── page_manager.dart       # Gerencia páginas e estado do TextField
-│   └── translation.dart        # Modelo de tradução
-├── screens/
-│   ├── base_screen.dart        # Tela principal com BottomNavigationBar
-│   ├── traduction/             # Tela de tradução
-│   │   └── traduction_screen.dart
-│   └── historic/               # Tela de histórico
-│       └── historic_screen.dart
-├── services/
-│   ├── i_services.dart         # Serviços extras (TTS e copiar texto)
-│   ├── offline_translator_service.dart # Lógica de tradução offline
-│   └── translation_data_base_service.dart # Persistência SQLite
-├── widgets/
-│   ├── my_app_bar.dart
-│   ├── my_button.dart
-│   └── my_dropdown_button.dart
-└── main.dart                   # Ponto de entrada do app
-
-
 ## 📸 Capturas de Tela
 
 https://github.com/user-attachments/assets/56603b8a-d4b5-4771-8cfd-b1a04e0db4fa
