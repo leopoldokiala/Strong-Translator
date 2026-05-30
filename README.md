@@ -34,7 +34,7 @@ https://github.com/user-attachments/assets/56603b8a-d4b5-4771-8cfd-b1a04e0db4fa
 
 # Como rodar o projeto
 # 1. Clone o repositório
-- git clone https://github.com/seu-usuario/strong_translator.git
+- git clone https://github.com/leopoldokiala/strong_translator.git
 - cd strong_translator
 # 2. Instale as dependências
 - flutter pub get
